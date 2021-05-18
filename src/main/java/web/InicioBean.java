@@ -11,9 +11,12 @@ public class InicioBean {
         return "baseDatos";
     }
     public String consultaFact(){
-        return "consulFac";
+        return "consulFact";
     }
     public String crearFact(){
         return "nuevaFact";
+    }
+    public String volverIni(){
+        return "index";
     }
 }

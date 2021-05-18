@@ -1,4 +1,3 @@
-
 *{
     margin: 0;
     padding: 0;
@@ -11,8 +10,8 @@ body{
 head
 
 .contenedor{
-    padding: 60px 0;
-    width: 90%;
+    padding: 40px 0;
+    width: 60%;
     max-width: 10px;
     margin: auto;
     overflow: hidden;
@@ -24,38 +23,23 @@ head
     margin-bottom: 30px;
 }
 
-.contenedor-banner h1{
-    margin: 50px 40px;
+.contenedor-banner2 h1{
+    margin: 30px 20px;
     color: whitesmoke;
-    font-size: 50px;
+    font-size: 30px;
     text-shadow: 2px 2px 2px brown;
 }
 
-.contenedor-banner{
+.contenedor-banner2{
     display: flex;
     background-color: rgb(99, 131, 138);
     background-attachment: fixed;
     justify-content: center
 }
 
-.imagen-inicio{
-    width: 10%;
-}
-
-.contenedor-descripcion{
-   align-content: center;
-   font-family: 'courier new';
-}
-.contenedor-descripcion h4{
-    text-align: justify;
-    margin-right: 20%;
-    margin-left: 20%;
-}
-
 .contenedor-footer{
     display: flex;
     justify-content: space-between;
-    position: absolute;
     bottom: 0;
     background-color: buttonhighlight;
     align-content: center;
