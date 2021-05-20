@@ -13,6 +13,8 @@
             <link href="configLogotipo.css" rel="stylesheet" type="text/css"/>
         </h:head>
         <h:body>
+          
+            
             <main>
                 <section class="contenedor banner3">
                     <div class="contenedor-banner3">
@@ -23,11 +25,9 @@
                 <p:panel>
                     <div class="p-grid">
                         <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm" align="left" /> 
-                        <div class="box">FACTURA DE VENTA</div>
-                        <div class="box">Nº DE FACTURA: </div>
+                        <div align="left" class="box">FACTURA DE VENTA</div>
+                        <div align="right" class="box">Nº DE FACTURA: </div>
                     </div>
-                </p:panel>
-                <p:panel>
                     <div class="p-grid">
                         <div class="box">MARKET HAPPY SHOPPING</div>
                         <div class="box">DIRECCIÓN</div>
@@ -35,13 +35,44 @@
                         <div class="box">TELÉFONO</div>
                     </div>
                 </p:panel>
-                <h:form>
+                
+                <p:panel>
+                    <br/>
+                      <h:form>
+                
+                    <span class="ui-float-label">
+                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigo}"/>
+                        <p:outputLabel for="@previous" value="Codigo del producto"/>
+                    </span><br/>
+                    <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="agregarProd"/>
+                    <br/><br/>
+                    <div class="card">
+                        <p:dataTable id="agregarProd" var="equipo1" value="#{manejadorBean_Inv.agregarProd}">
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{equipo1.codigo}" />
+                                </p:column>
+
+                                <p:column headerText="Existencias ">
+                                    <h:outputText value="#{equipo1.existencias}" />
+                                </p:column>
+
+                                <p:column headerText="Nombre">
+                                    <h:outputText value="#{equipo1.nombreP}" />
+                                </p:column>
+
+                                <p:column headerText="Valor unitario">
+                                    <h:outputText value="#{equipo1.valorUnit}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                     </h:form>
+                </p:panel>
+                
                     <br/>
                     <p:commandButton id="boton" value="Volver " action="index"/>
                     <br/>
-                </h:form>
-                <br/>
-                <br/>
+               
+                <br/><br/>
                 <footer>
                     <div class="contenedor-footer">
                         <img src="imagenes/un-pasado-ejemplar.png" alt="" class="imagen-logoU"/>
@@ -50,6 +81,7 @@
                     </div>
                 </footer>
             </main>
+               
         </h:body>
     </html>
 </f:view>

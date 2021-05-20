@@ -9,16 +9,28 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import logica.OperInventario;
 
+
 @ManagedBean
 @SessionScoped
 public class ManejadorBean_Inv implements Serializable {
     
     private Integer existencias;
-    private Integer codigo;
+    private String codigo;
     private String nombreP;
     private Long valorUnit;
     private List<ListaInventario> inventario;
-    private static List<ListaInventario> agregarProd = new ArrayList<ListaInventario>();
+    private ArrayList<ListaInventario> agregarProd = new ArrayList<ListaInventario>();
+    
+
+    public ArrayList<ListaInventario> getAgregarProd() {
+        return agregarProd;
+    }
+
+
+    public void setAgregarProd(ArrayList<ListaInventario> agregarProd) {
+        this.agregarProd = agregarProd;
+    }
+    
 
     public Integer getExistencias() {
         return existencias;
@@ -28,11 +40,11 @@ public class ManejadorBean_Inv implements Serializable {
         this.existencias = existencias;
     }
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -60,27 +72,17 @@ public class ManejadorBean_Inv implements Serializable {
         this.inventario = inventario;
     }
 
-    public static List<ListaInventario> getAgregarProd() {
-        return agregarProd;
-    }
-
-    public static void setAgregarProd(List<ListaInventario> agregarProd) {
-        ManejadorBean_Inv.agregarProd = agregarProd;
-    }
-    
     //--------------------------------------------------------------------------    
     public ManejadorBean_Inv() {
         OperInventario e = new OperInventario();
         this.inventario = e.consultar();
+
     }
     
-    public void agregar() {
-        inventario = agregarProd;
+    public void agregarDatos() {
         OperInventario e = new OperInventario();
-        ListaInventario in = new ListaInventario();
-        in.setCodigo(this.codigo);
-        this.inventario = e.agregar(this.codigo);
-        inventario = (List<ListaInventario>) new ListaInventario();
-    }
-    
+        ListaInventario in = e.agregar(this.codigo);
+        this.agregarProd.add(in);
+        
+    }    
 }
