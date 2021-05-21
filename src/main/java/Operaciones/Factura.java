@@ -5,10 +5,8 @@ package Operaciones;
  *
  * @author Stefanny
  */
-public class OperFactura {
+public class Factura {
 
-    
-    
     public int ValorTotProduc(){
         return 0;
     }

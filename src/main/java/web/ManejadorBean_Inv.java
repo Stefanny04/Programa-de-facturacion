@@ -13,55 +13,34 @@ import logica.OperInventario;
 @ManagedBean
 @SessionScoped
 public class ManejadorBean_Inv implements Serializable {
-    
-    private Integer existencias;
-    private String codigo;
-    private String nombreP;
-    private Long valorUnit;
+   
+    private ListaInventario lista;
     private List<ListaInventario> inventario;
-    private ArrayList<ListaInventario> agregarProd = new ArrayList<ListaInventario>();
-    
+    private static ArrayList<ListaInventario> ListaEstatica= new ArrayList<>();
+    private ArrayList<ListaInventario> agregarProd= new ArrayList<>();
 
-    public ArrayList<ListaInventario> getAgregarProd() {
-        return agregarProd;
+    public ListaInventario getLista() {
+        return lista;
     }
 
+    public static ArrayList<ListaInventario> getListaEstatica() {
+        return ListaEstatica;
+    }
+
+    public static void setListaEstatica(ArrayList<ListaInventario> ListaEstatica) {
+        ManejadorBean_Inv.ListaEstatica = ListaEstatica;
+    }
+
+    public void setLista(ListaInventario lista) {
+        this.lista = lista;
+    }
+
+    public ArrayList<ListaInventario> getAgregarProd() {
+        return ListaEstatica;
+    }
 
     public void setAgregarProd(ArrayList<ListaInventario> agregarProd) {
         this.agregarProd = agregarProd;
-    }
-    
-
-    public Integer getExistencias() {
-        return existencias;
-    }
-
-    public void setExistencias(Integer existencias) {
-        this.existencias = existencias;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getNombreP() {
-        return nombreP;
-    }
-
-    public void setNombreP(String nombreP) {
-        this.nombreP = nombreP;
-    }
-
-    public Long getValorUnit() {
-        return valorUnit;
-    }
-
-    public void setValorUnit(Long valorUnit) {
-        this.valorUnit = valorUnit;
     }
 
     public List<ListaInventario> getInventario() {
@@ -76,13 +55,14 @@ public class ManejadorBean_Inv implements Serializable {
     public ManejadorBean_Inv() {
         OperInventario e = new OperInventario();
         this.inventario = e.consultar();
-
+        lista = new ListaInventario();
     }
     
     public void agregarDatos() {
         OperInventario e = new OperInventario();
-        ListaInventario in = e.agregar(this.codigo);
-        this.agregarProd.add(in);
-        
+        ListaInventario in = e.agregar(lista.getCodigo());
+        ListaEstatica.add(in);
+        this.agregarProd = ListaEstatica;
+        lista = new ListaInventario();
     }    
 }

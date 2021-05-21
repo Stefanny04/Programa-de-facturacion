@@ -41,13 +41,13 @@
                       <h:form>
                 
                     <span class="ui-float-label">
-                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigo}"/>
+                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.lista.codigo}"/>
                         <p:outputLabel for="@previous" value="Codigo del producto"/>
                     </span><br/>
-                    <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="agregarProd"/>
+                    <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
                     <br/><br/>
                     <div class="card">
-                        <p:dataTable id="agregarProd" var="equipo1" value="#{manejadorBean_Inv.agregarProd}">
+                        <p:dataTable id="tablita" var="equipo1" value="#{manejadorBean_Inv.agregarProd}">
                                 <p:column headerText="Codigo">
                                     <h:outputText value="#{equipo1.codigo}" />
                                 </p:column>

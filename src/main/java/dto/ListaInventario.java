@@ -42,6 +42,13 @@ public class ListaInventario {
 
     public ListaInventario() {
     }
+
+    public ListaInventario(Integer existencias, String codigo, String nombreP, Long valorUnit) {
+        this.existencias = existencias;
+        this.codigo = codigo;
+        this.nombreP = nombreP;
+        this.valorUnit = valorUnit;
+    }
     
     @Override
     public String toString(){
