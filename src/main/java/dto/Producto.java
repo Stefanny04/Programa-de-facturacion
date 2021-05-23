@@ -1,20 +1,12 @@
 
 package dto;
 
-public class ListaInventario {
+
+public class Producto{
     
-    private Integer existencias;
     private String codigo;
     private String nombreP;
     private Long valorUnit;
-      
-    public Integer getExistencias() {
-        return existencias;
-    }
-
-    public void setExistencias(Integer existencias) {
-        this.existencias = existencias;
-    }
 
     public String getCodigo() {
         return codigo;
@@ -39,22 +31,14 @@ public class ListaInventario {
     public void setValorUnit(Long valorUnit) {
         this.valorUnit = valorUnit;
     }
-
-    public ListaInventario() {
+    
+    public Producto() {
     }
 
-    public ListaInventario(Integer existencias, String codigo, String nombreP, Long valorUnit) {
-        this.existencias = existencias;
+    public Producto(String codigo, String nombreP, Long valorUnit) {
         this.codigo = codigo;
         this.nombreP = nombreP;
         this.valorUnit = valorUnit;
     }
     
-    @Override
-    public String toString(){
-        return this.existencias+" "+
-                this.codigo +" "+
-                this.nombreP+" "+
-                this.valorUnit;
-    }
 }

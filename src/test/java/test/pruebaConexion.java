@@ -10,12 +10,9 @@ import database.Conexiones;
 import java.sql.Connection;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
-/**
- *
- * @author Stefanny
- */
+
 public class pruebaConexion {
     
     public pruebaConexion() {
@@ -37,10 +34,10 @@ public class pruebaConexion {
     public void tearDown() throws Exception {
     }
     
-    //@Test
-    /*public void testpruebaConexion() {
+    @Test
+    public void testpruebaConexion() {
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
-        Assertions.AssertNotNull(cActiva);
-    }*/
+        
+    }
 }

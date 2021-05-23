@@ -41,27 +41,27 @@
                       <h:form>
                 
                     <span class="ui-float-label">
-                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.lista.codigo}"/>
+                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigoP}"/>
                         <p:outputLabel for="@previous" value="Codigo del producto"/>
                     </span><br/>
                     <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
                     <br/><br/>
                     <div class="card">
-                        <p:dataTable id="tablita" var="equipo1" value="#{manejadorBean_Inv.agregarProd}">
+                        <p:dataTable id="tablita" var="factura" value="#{manejadorBean_Inv.agregarProd}">
                                 <p:column headerText="Codigo">
-                                    <h:outputText value="#{equipo1.codigo}" />
+                                    <h:outputText value="#{factura.inventario.producto.codigo}" />
                                 </p:column>
 
                                 <p:column headerText="Existencias ">
-                                    <h:outputText value="#{equipo1.existencias}" />
+                                    <h:outputText value="#{factura.inventario.existencias}" />
                                 </p:column>
 
                                 <p:column headerText="Nombre">
-                                    <h:outputText value="#{equipo1.nombreP}" />
+                                    <h:outputText value="#{factura.inventario.producto.nombreP}" />
                                 </p:column>
 
                                 <p:column headerText="Valor unitario">
-                                    <h:outputText value="#{equipo1.valorUnit}" />
+                                    <h:outputText value="#{factura.inventario.producto.valorUnit}" />
                                 </p:column>
                             </p:dataTable>
                         </div>
