@@ -43,7 +43,10 @@
                                 <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2">
                                     <p:dataExporter type="pdf" target="tablita" fileName="products"/>
                                 </p:commandButton>
-                                
+                                <h:commandLink>
+                                    <h:graphicImage url="imagenes/descargar.jpg" width="30"/>
+                                    <p:dataExporter type="pdf" target="tablita" fileName="Factura" />
+                                </h:commandLink>
                             </div>
 
                             <span class="ui-float-label">
