@@ -2,39 +2,32 @@
 package dto;
 
 import Operaciones.operacionesFactura;
+import java.util.List;
 
 public class Factura {
 
-    private Long totalProducto;
-    private Long totalFact;
-    private Integer cantExist;
+    private double totalFact;
+
+    private List<Inventario> ListaInv ;
     private Inventario inventario;
-    private operacionesFactura operaciones;
 
-    public Long getTotalProducto() {
-        return totalProducto;
-    }
-
-    public void setTotalProducto(Long totalProducto) {
-        this.totalProducto = totalProducto;
-    }
-
-    public Long getTotalFact() {
+    public double getTotalFact() {
         return totalFact;
     }
 
-    public void setTotalFact(Long totalFact) {
+    public void setTotalFact(double totalFact) {
         this.totalFact = totalFact;
     }
 
-    public Integer getCantExist() {
-        return cantExist;
+    public List<Inventario> getListaInv() {
+        return ListaInv;
     }
 
-    public void setCantExist(Integer cantExist) {
-        this.cantExist = cantExist;
+    public void setListaInv(List<Inventario> ListaInv) {
+        this.ListaInv = ListaInv;
     }
-
+    
+    
     public Inventario getInventario() {
         return inventario;
     }
@@ -42,32 +35,15 @@ public class Factura {
     public void setInventario(Inventario lista) {
         this.inventario = lista;
     }
-
-    public operacionesFactura getOperaciones() {
-        return operaciones;
-    }
-
-    public void setOperaciones(operacionesFactura operaciones) {
-        this.operaciones = operaciones;
-    }
     
-    public Factura(){}
-    
-    public Factura(Long totalProducto, Long totalFact, Integer cantExist,Inventario inventario){
-        this.totalProducto = totalProducto;
-        this.totalFact = totalFact;        
-        this.cantExist = cantExist;
-        this.inventario = inventario;
-    }
-       
     @Override
     public String toString(){
-        return this.cantExist+" "+
+        return  //this.valorTotalProd+" "+
                 this.totalFact+" "+
-                this.totalProducto+" "+
                 this.inventario.getExistencias()+" "+
                 this.inventario.getProducto().getCodigo()+" "+
                 this.inventario.getProducto().getNombreP()+" "+
                 this.inventario.getProducto().getValorUnit();
     }
+
 }

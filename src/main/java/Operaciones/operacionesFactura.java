@@ -1,35 +1,58 @@
 
 package Operaciones;
 
+import dto.Factura;
+
 public class operacionesFactura {
+
+    private Factura factura;
+    private long valorTProd;
+    private long valorTFact;
     
-    private int cantExist;
-    private double totalProd;
-    private double totalFact;
-
-    public int getCantExist() {
-        return cantExist;
+    public Factura getFactura() {
+        return factura;
     }
 
-    public void setCantExist(int cantExist) {
-        this.cantExist = cantExist;
+    public void setFactura(Factura factura) {
+        this.factura = factura;
     }
 
-    public double getTotalProd() {
-        return totalProd;
+    public long getValorTotal() {
+        return valorTProd;
     }
 
-    public void setTotalProd(double totalProd) {
-        this.totalProd = totalProd;
+    public void setValorTotal(long valorTotal) {
+        this.valorTProd = valorTotal;
     }
 
-    public double getTotalFact() {
-        return totalFact;
+    public long getValorTFact() {
+        return valorTFact;
     }
 
-    public void setTotalFact(double totalFact) {
-        this.totalFact = totalFact;
+    public void setValorTFact(long valorTFact) {
+        this.valorTFact = valorTFact;
+    }
+
+    public long getValorTProd() {
+        return valorTProd;
+    }
+
+    public void setValorTProd(long valorTProd) {
+        this.valorTProd = valorTProd;
     }
     
+    public int cantidad(int cant, int canInv){
+        canInv = canInv - cant;
+        return canInv;
+    }
     
+    public long totalFactura(long valorT){
+        valorTFact += valorT;
+        return valorTFact;
+    }
+    
+    public long totalProd(int cant, long valUnit){
+        valorTProd = valUnit*cant;
+        return valorTProd;        
+    }
 }

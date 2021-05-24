@@ -13,18 +13,17 @@
             <link href="configLogotipo.css" rel="stylesheet" type="text/css"/>
         </h:head>
         <h:body>
-          
-            
             <main>
                 <section class="contenedor banner3">
                     <div class="contenedor-banner3">
+                        <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm" align="left" /> 
                         <h1>NUEVA</h1>
                         <h1>FACTURA</h1>
                     </div>
                 </section>
                 <p:panel>
                     <div class="p-grid">
-                        <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm" align="left" /> 
+
                         <div align="left" class="box">FACTURA DE VENTA</div>
                         <div align="right" class="box">Nº DE FACTURA: </div>
                     </div>
@@ -35,43 +34,76 @@
                         <div class="box">TELÉFONO</div>
                     </div>
                 </p:panel>
-                
+
                 <p:panel>
                     <br/>
-                      <h:form>
-                
-                    <span class="ui-float-label">
-                        <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigoP}"/>
-                        <p:outputLabel for="@previous" value="Codigo del producto"/>
-                    </span><br/>
-                    <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
-                    <br/><br/>
                     <div class="card">
-                        <p:dataTable id="tablita" var="factura" value="#{manejadorBean_Inv.agregarProd}">
-                                <p:column headerText="Codigo">
-                                    <h:outputText value="#{factura.inventario.producto.codigo}" />
+                        <h:form>
+                            <div>
+                                <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2">
+                                    <p:dataExporter type="pdf" target="tablita" fileName="products"/>
+                                </p:commandButton>
+                                
+                            </div>
+
+                            <span class="ui-float-label">
+                                <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigoP}"/>
+                                <p:outputLabel for="@previous" value="Codigo del producto"/>
+                            </span><br/>
+                            <span class="ui-float-label">
+                                <p:inputMask id="cantidad" value="#{manejadorBean_Inv.cantidad}"/>
+                                <p:outputLabel for="@previous" value="Cantidad"/>
+                            </span><br/>
+
+                            <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
+                            <br/><br/>
+
+                            <p:dataTable id="tablita" var="inventario" value="#{manejadorBean_Inv.agregarProd}"
+                                         rows="10" styleClass="p-mt-2">
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Codigo"/>
+                                    </f:facet>
+                                    <h:outputText value="#{inventario.producto.codigo}" />
                                 </p:column>
 
-                                <p:column headerText="Existencias ">
-                                    <h:outputText value="#{factura.inventario.existencias}" />
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Cantidad"/>
+                                    </f:facet>
+                                    <h:outputText value="#{inventario.cantidad}" />
                                 </p:column>
 
-                                <p:column headerText="Nombre">
-                                    <h:outputText value="#{factura.inventario.producto.nombreP}" />
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>
+                                    </f:facet>
+                                    <h:outputText value="#{inventario.producto.nombreP}" />
                                 </p:column>
 
-                                <p:column headerText="Valor unitario">
-                                    <h:outputText value="#{factura.inventario.producto.valorUnit}" />
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Valor total del producto"/>
+                                    </f:facet>
+                                    <h:outputText value="#{inventario.valorTproducto}" >
+                                        <f:convertNumber type="currency" currencySymbol="$"/>
+                                    </h:outputText>
                                 </p:column>
+                                <p:columnGroup type="footer">
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align:right" footerText="Total:"/>
+                                        <p:column footerText="$#{manejadorBean_Inv.valorTFactura}"/>
+                                    </p:row>
+                                </p:columnGroup>
                             </p:dataTable>
-                        </div>
-                     </h:form>
+
+                        </h:form>
+                    </div>
                 </p:panel>
-                
-                    <br/>
-                    <p:commandButton id="boton" value="Volver " action="index"/>
-                    <br/>
-               
+                <br/>
+                <p:commandButton id="boton" value="Volver " action="index"/>
+                <br/>
+
                 <br/><br/>
                 <footer>
                     <div class="contenedor-footer">
@@ -81,7 +113,7 @@
                     </div>
                 </footer>
             </main>
-               
+
         </h:body>
     </html>
 </f:view>

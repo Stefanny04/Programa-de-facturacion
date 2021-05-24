@@ -13,30 +13,29 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OperFactura implements Operaciones<Factura> {
+public class OperFactura implements Operaciones<Inventario> {
 
     @Override
-    public List<Factura> consultar() {
+    public List<Inventario> consultar() {
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
-        List<Factura> inv = new ArrayList<>();
+        List<Inventario> inv = new ArrayList<>();
         if (cActiva != null) {
             try {
                 String sql = "Select * from inventario";
                 PreparedStatement ps = cActiva.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    Factura fact = new Factura();
                     Inventario in = new Inventario(); 
                     Producto prod = new Producto();
-                    fact.setInventario(in);
-                    in.setProducto(prod);
-                    fact.getInventario().setExistencias(rs.getInt("existencias"));
-                    fact.getInventario().getProducto().setCodigo(rs.getString("codigo"));
-                    fact.getInventario().getProducto().setNombreP(rs.getString("nombreP"));
-                    fact.getInventario().getProducto().setValorUnit(rs.getLong("valorUnit"));
 
-                    inv.add(fact);
+                    in.setProducto(prod);
+                    in.setExistencias(rs.getInt("existencias"));
+                    in.getProducto().setCodigo(rs.getString("codigo"));
+                    in.getProducto().setNombreP(rs.getString("nombreP"));
+                    in.getProducto().setValorUnit(rs.getLong("valorUnit"));
+
+                    inv.add(in);
                 }
 
             } catch (SQLException ex) {
@@ -49,10 +48,9 @@ public class OperFactura implements Operaciones<Factura> {
     }
 
     @Override
-    public Factura llevarInventario(String dato) {
+    public Inventario llevarInventario(String dato) {
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
-        Factura fact = new Factura();
         Inventario in = new Inventario();
         Producto prod = new Producto();
         if (cActiva != null) {
@@ -62,12 +60,12 @@ public class OperFactura implements Operaciones<Factura> {
                 ps.setString(1, dato);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()){
-                    fact.setInventario(in);
+
                     in.setProducto(prod);
-                    fact.getInventario().setExistencias(rs.getInt("existencias"));
-                    fact.getInventario().getProducto().setNombreP(rs.getString("nombreP"));
-                    fact.getInventario().getProducto().setValorUnit(rs.getLong("valorUnit"));
-                    fact.getInventario().getProducto().setCodigo(rs.getString("codigo"));
+                    in.setExistencias(rs.getInt("existencias"));
+                    in.getProducto().setNombreP(rs.getString("nombreP"));
+                    in.getProducto().setValorUnit(rs.getLong("valorUnit"));
+                    in.getProducto().setCodigo(rs.getString("codigo"));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(OperFactura.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +73,31 @@ public class OperFactura implements Operaciones<Factura> {
                 c.desconectase(cActiva);
             }
         }
-        return fact;
+        return in;
+    }
+
+    @Override
+    public int actualizarExt(int cant, Inventario dato) {
+        Conexiones c = new Conexiones();
+        Connection cActiva = c.conectarse();
+        if (cActiva != null) {
+            try {
+                String sql = "UPDATE inventario SET existencias =? WHERE codigo=?";
+                PreparedStatement ps = cActiva.prepareStatement(sql);
+                //ResultSet rs = ps.executeQuery();
+                ps.setInt(1, cant);
+                ps.setString(2, dato.getProducto().getCodigo());
+                int rta = ps.executeUpdate();
+                
+                return rta;
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(OperFactura.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                c.desconectase(cActiva);
+            }
+        }
+        return 0;
     }
 
 }
