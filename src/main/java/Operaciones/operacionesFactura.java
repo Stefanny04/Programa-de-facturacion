@@ -1,22 +1,12 @@
 
 package Operaciones;
 
-import dto.Factura;
 
 public class operacionesFactura {
 
-    private Factura factura;
     private long valorTProd;
     private long valorTFact;
     
-    public Factura getFactura() {
-        return factura;
-    }
-
-    public void setFactura(Factura factura) {
-        this.factura = factura;
-    }
-
     public long getValorTotal() {
         return valorTProd;
     }
