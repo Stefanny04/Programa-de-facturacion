@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:pe="http://primefaces.org/ui/extensions" 
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -16,14 +17,14 @@
             <main>
                 <section class="contenedor banner3">
                     <div class="contenedor-banner3">
-                        <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm" align="left" /> 
+
                         <h1>NUEVA</h1>
                         <h1>FACTURA</h1>
                     </div>
                 </section>
                 <p:panel>
                     <div class="p-grid">
-
+                        <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm"/> 
                         <div align="left" class="box">FACTURA DE VENTA</div>
                         <div align="right" class="box">Nº DE FACTURA: </div>
                     </div>
@@ -39,12 +40,9 @@
                     <br/>
                     <div class="card">
                         <h:form>
-                            <div>
-                                <p:commandButton value="PDF" styleClass="p-mr-2 p-mb-2">
-                                    <p:dataExporter type="pdf" target="tablita" fileName="products"/>
-                                </p:commandButton>
-                                
-                            </div>
+                            <p:messages id="messages" showDetail="true" closable="true">
+                                <p:autoUpdate/>
+                            </p:messages>
 
                             <span class="ui-float-label">
                                 <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigoP}"/>
@@ -53,13 +51,22 @@
                             <span class="ui-float-label">
                                 <p:inputMask id="cantidad" value="#{manejadorBean_Inv.cantidad}"/>
                                 <p:outputLabel for="@previous" value="Cantidad"/>
-                            </span><br/>
+                            </span><br/><br/>
+
+                            <h5 class="p-mt-0">Elija un método de pago</h5>
+                            <p:selectOneRadio value="#{manejadorBean_Inv.descuento}" unselectable="true">
+                                <f:selectItem itemLabel="Tarjeta" itemValue="tarjeta"/>
+                                <f:selectItem itemLabel="Efectivo" itemValue="efectivo"/>
+                            </p:selectOneRadio>
+
 
                             <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
                             <br/><br/>
 
-                            <p:dataTable id="tablita" var="inventario" value="#{manejadorBean_Inv.agregarProd}"
-                                         rows="10" styleClass="p-mt-2">
+
+                            <p:dataTable id="tablita" var="inventario" value="#{manejadorBean_Inv.agregarProd}" 
+                                         rows="10" styleClass="p-mt-2" scrollable="true"
+                                         scrollHeight="300">
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Codigo"/>
@@ -85,14 +92,18 @@
                                     <f:facet name="header">
                                         <h:outputText value="Valor total del producto"/>
                                     </f:facet>
-                                    <h:outputText value="#{inventario.valorTproducto}" >
-                                        <f:convertNumber type="currency" currencySymbol="$"/>
+                                    <h:outputText value="$#{inventario.valorTproducto}" >
+                                        <f:convertNumber currencySymbol="$"/>
                                     </h:outputText>
                                 </p:column>
                                 <p:columnGroup type="footer">
                                     <p:row>
-                                        <p:column colspan="3" style="text-align:right" footerText="Total:"/>
+                                        <p:column colspan="3" style="text-align:center" footerText="Total más impuestos:"/>
                                         <p:column footerText="$#{manejadorBean_Inv.valorTFactura}"/>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="3" style="text-align:center" footerText="Descuento aplicado:"/>
+                                        <p:column footerText="$#{manejadorBean_Inv.desc}"/>
                                     </p:row>
                                 </p:columnGroup>
                             </p:dataTable>

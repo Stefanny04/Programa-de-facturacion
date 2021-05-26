@@ -1,7 +1,6 @@
 package logica;
 
 import database.Conexiones;
-import dto.Factura;
 import dto.Inventario;
 import dto.Producto;
 import java.sql.Connection;

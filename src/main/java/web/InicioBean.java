@@ -10,9 +10,6 @@ public class InicioBean {
     public String mostrarBaseDatos(){
         return "baseDatos";
     }
-    public String consultaFact(){
-        return "consulFact";
-    }
     public String crearFact(){
         return "nuevaFact";
     }

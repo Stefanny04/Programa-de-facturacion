@@ -11,6 +11,8 @@ public class Inventario {
     private operacionesFactura operaciones;
     private long valorTproducto;
     private long valorTFact;
+    private long descT;
+    private long descE;
 
     public int getCantidad() {
         return cantidad;
@@ -60,17 +62,34 @@ public class Inventario {
         this.valorTFact = valorTFact;
     }
 
-    
+    public long getDescT() {
+        return descT;
+    }
+
+    public void setDescT(long descT) {
+        this.descT = descT;
+    }
+
+    public long getDescE() {
+        return descE;
+    }
+
+    public void setDescE(long descE) {
+        this.descE = descE;
+    }
+        
     public Inventario() {}
 
     public Inventario(int existencias, int cantidad, Producto producto, operacionesFactura operaciones,
-        long valorTproducto, long valorTFact) {
+        long valorTproducto, long valorTFact, long descT, long descE) {
         this.existencias = existencias;
         this.cantidad = cantidad;
         this.producto = producto;
         this.operaciones = operaciones;
         this.valorTproducto = valorTproducto;
         this.valorTFact = valorTFact;
+        this.descT = descT;
+        this.descE = descE;
     }
     
     @Override
@@ -81,6 +100,8 @@ public class Inventario {
                this.existencias+""+
                this.cantidad+""+
                this.valorTproducto+""+
-               this.valorTFact;
+               this.valorTFact+""+
+               this.descT+""+
+               this.descE;
     }
 }

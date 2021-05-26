@@ -1,5 +1,4 @@
 
-
 *{
     margin: 0;
     padding: 0;
@@ -10,12 +9,12 @@ body{
     font-family: 'caveat';
 }
 head
+
 .contenedor{
-    padding: 40px 0;
-    width: 60%;
+    width: 30%;
     max-width: 10px;
-    margin: auto;
     overflow: hidden;
+    border: 5px groove;
 }
 .titulo{
     color: #35455e;
@@ -37,10 +36,12 @@ head
     background-attachment: fixed;
     justify-content: center
 }
+
 .imagen-logoEm{
-    align-content: flex-start;
-    width: 20%;
-    height: 30%;
+    padding: 10px; 
+    margin: 6px; 
+    float: left; 
+    width: 140px;
 }
 
 .contenedor-footer{

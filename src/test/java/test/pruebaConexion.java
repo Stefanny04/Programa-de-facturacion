@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package test;
 
 
 import database.Conexiones;
 import java.sql.Connection;
-import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.assertNotNull;
-
 
 public class pruebaConexion {
     
@@ -38,6 +32,6 @@ public class pruebaConexion {
     public void testpruebaConexion() {
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
-        
+        Assert.assertNotNull(cActiva);
     }
 }
