@@ -82,7 +82,7 @@ public class ManejadorBean_Inv implements Serializable {
     public void setDesc(long desc) {
         this.desc = desc;
     }
-    
+
     public List<Inventario> getLista() {
         return lista;
     }
@@ -121,12 +121,6 @@ public class ManejadorBean_Inv implements Serializable {
         inv.setProducto(prod);
         Inventario inve = oper.llevarInventario(this.codigoP);
         
-        
-        
-        ListaEstatica.add(inve);
-        this.agregarProd = ListaEstatica;
-        inventario = new Inventario();
-
         //Operación existencias 
         operacionesFactura operF = new operacionesFactura();
         int aux = -1;
@@ -135,11 +129,49 @@ public class ManejadorBean_Inv implements Serializable {
                 aux = e;
             }
         }
-        int cantidadF = operF.cantidad(cantidad, lista.get(aux).getExistencias());
-        oper.actualizarExt(cantidadF, lista.get(aux));
+        if(operF.cantidad(cantidad, lista.get(aux).getExistencias()) == 0){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "mal, ponga bien la cantidad"));
+            
+        }else{
+            int cantidadF = operF.cantidad(cantidad, lista.get(aux).getExistencias());
+            oper.actualizarExt(cantidadF, lista.get(aux));
+            ListaEstatica.add(inve);
+            this.agregarProd = ListaEstatica;
+            inventario = new Inventario();
+            for (int e = 0; e < agregarProd.size(); e++) {
+            if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
+                aux = e;
+            }
+        }
+        valorTproducto = operF.totalProd(cantidad, agregarProd.get(aux).getProducto().getValorUnit());
+        agregarProd.get(aux).setValorTproducto(this.valorTproducto);
+        agregarProd.get(aux).setCantidad(this.cantidad);
+
+        //operacion valorTfactura
+        for (int e = 0; e < agregarProd.size(); e++) {
+            if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
+                aux = e;
+            }
+            valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
+        }
+        agregarProd.get(aux).setValorTFact(this.valorTFactura);
+
+        
+        //aplicar los descuentos
+        if (descuento.equals("tarjeta")) {
+            desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
+            agregarProd.get(aux).setDescT(this.desc);
+        } else {
+            desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
+            agregarProd.get(aux).setDescE(this.desc);
+        }
+        if (descuento.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Seleccione un método de pago"));
+        }
+        }
         
 
-        //operacion valorTproducto
+        /*//operacion valorTproducto
         for (int e = 0; e < agregarProd.size(); e++) {
             if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
                 aux = e;
@@ -156,17 +188,20 @@ public class ManejadorBean_Inv implements Serializable {
             }
             valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
         }
-
         agregarProd.get(aux).setValorTFact(this.valorTFactura);
+
         
         //aplicar los descuentos
-        if(descuento.equals("tarjeta")){
+        if (descuento.equals("tarjeta")) {
             desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
             agregarProd.get(aux).setDescT(this.desc);
-        }else{
+        } else {
             desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
             agregarProd.get(aux).setDescE(this.desc);
         }
-        
+        if (descuento.isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Seleccione un método de pago"));
+        }*/
     }
+
 }

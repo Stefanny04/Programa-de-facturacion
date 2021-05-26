@@ -39,9 +39,21 @@ public class operFacturaTest {
     }
 
     @Test
-    public void testConsultarOK() {
+    public void testLlevarInventarioNull(){
         OperFactura oper = new OperFactura();
-        oper.consultar();
+        Inventario rta = oper.llevarInventario(null);
+        assertEquals(0, rta);
     }
+    /*public void testLlevarInventarioOK() {
+        OperFactura oper = new OperFactura();
+        Inventario in = new Inventario();
+        in.setExistencias(1);
+        in.getProducto().setCodigo("2365");
+        in.getProducto().setNombreP("bebida Mr. tea durazno");
+        in.getProducto().setValorUnit(2100L);
+        Inventario rta = oper.llevarInventario("");
+        assertEquals("", "", 0L);
+        
+    }*/
     
 }

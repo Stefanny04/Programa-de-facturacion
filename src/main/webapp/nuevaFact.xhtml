@@ -23,16 +23,16 @@
                     </div>
                 </section>
                 <p:panel>
-                    <div class="p-grid">
+                    <div>
                         <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm"/> 
                         <div align="left" class="box">FACTURA DE VENTA</div>
-                        <div align="right" class="box">Nº DE FACTURA: </div>
+                        <div align="center" class="box">Nº DE FACTURA: 0001</div>
                     </div>
-                    <div class="p-grid">
-                        <div class="box">MARKET HAPPY SHOPPING</div>
-                        <div class="box">DIRECCIÓN</div>
-                        <div class="box">NIT</div>
-                        <div class="box">TELÉFONO</div>
+                    <div><br/>
+                        <div class="box" align="center" >MARKET HAPPY SHOPPING</div>
+                        <div class="box">DIRECCIÓN: crra 90 #123 - 14</div>
+                        <div class="box">NIT: 17,610,465-1</div>
+                        <div class="box">TELÉFONO: 460147345</div>
                     </div>
                 </p:panel>
 
@@ -60,7 +60,8 @@
                             </p:selectOneRadio>
 
 
-                            <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"/>
+                            <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"
+                                             ajax="false" icon="pi pi-check" validateClient="true"/>
                             <br/><br/>
 
 

@@ -59,7 +59,6 @@ public class OperFactura implements Operaciones<Inventario> {
                 ps.setString(1, dato);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()){
-
                     in.setProducto(prod);
                     in.setExistencias(rs.getInt("existencias"));
                     in.getProducto().setNombreP(rs.getString("nombreP"));
