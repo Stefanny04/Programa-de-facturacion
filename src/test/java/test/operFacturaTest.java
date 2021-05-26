@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package test;
 
 import dto.Inventario;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -13,47 +11,66 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import logica.OperFactura;
-/**
- *
- * @author Stefanny
- */
+
 public class operFacturaTest {
-    
+
     public operFacturaTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
     @Test
-    public void testLlevarInventarioNull(){
+    public void testConsultarOK() {
         OperFactura oper = new OperFactura();
-        Inventario rta = oper.llevarInventario(null);
-        assertEquals(0, rta);
+        List<Inventario> datos = new ArrayList<>();
+        datos = oper.consultar();
     }
-    /*public void testLlevarInventarioOK() {
+
+    @Test
+    public void testLlevarInventarioOk() {
         OperFactura oper = new OperFactura();
-        Inventario in = new Inventario();
-        in.setExistencias(1);
-        in.getProducto().setCodigo("2365");
-        in.getProducto().setNombreP("bebida Mr. tea durazno");
-        in.getProducto().setValorUnit(2100L);
-        Inventario rta = oper.llevarInventario("");
-        assertEquals("", "", 0L);
-        
-    }*/
-    
+        assertNotNull(oper.llevarInventario("2578"));
+    }
+
+    @Test
+    public void testLlevarInventarioVacio() {
+        OperFactura oper = new OperFactura();
+        assertEquals(null, oper.llevarInventario(""));
+    }
+
+    @Test
+    public void testLlevarInventarioNull() {
+        OperFactura oper = new OperFactura();
+        Inventario dato = oper.llevarInventario(null);
+        assertEquals(null, dato);
+    }
+
+    @Test
+    public void testActualizarExNull() {
+        OperFactura oper = new OperFactura();
+        Inventario dato = oper.llevarInventario(null);
+        assertEquals(0, oper.actualizarExt(1, dato));
+    }
+
+    @Test
+    public void testActualizarExCantCero() {
+        OperFactura oper = new OperFactura();
+        Inventario dato = oper.llevarInventario("2365");
+        assertEquals(0, oper.actualizarExt(0, dato));
+    }
+
 }

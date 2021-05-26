@@ -40,7 +40,7 @@ public class operacionesFactura {
 
     //Operaciones -------------------------------------
     public int cantidad(int cant, int canInv) {
-        if (cant > canInv || cant == 0 || cant < 0) {
+        if (cant > canInv || cant == 0 || cant < 0 || canInv == 0) {
             return 0;
         } else {
             canInv = canInv - cant;

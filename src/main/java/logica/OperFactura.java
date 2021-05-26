@@ -25,7 +25,7 @@ public class OperFactura implements Operaciones<Inventario> {
                 PreparedStatement ps = cActiva.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    Inventario in = new Inventario(); 
+                    Inventario in = new Inventario();
                     Producto prod = new Producto();
 
                     in.setProducto(prod);
@@ -48,6 +48,9 @@ public class OperFactura implements Operaciones<Inventario> {
 
     @Override
     public Inventario llevarInventario(String dato) {
+        if (dato == null || dato.isEmpty()) {
+            return null;
+        }
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
         Inventario in = new Inventario();
@@ -58,7 +61,7 @@ public class OperFactura implements Operaciones<Inventario> {
                 PreparedStatement ps = cActiva.prepareStatement(sql);
                 ps.setString(1, dato);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()){
+                while (rs.next()) {
                     in.setProducto(prod);
                     in.setExistencias(rs.getInt("existencias"));
                     in.getProducto().setNombreP(rs.getString("nombreP"));
@@ -76,19 +79,21 @@ public class OperFactura implements Operaciones<Inventario> {
 
     @Override
     public int actualizarExt(int cant, Inventario dato) {
+        if (cant == 0 || dato == null) {
+            return 0;
+        }
         Conexiones c = new Conexiones();
         Connection cActiva = c.conectarse();
         if (cActiva != null) {
             try {
                 String sql = "UPDATE inventario SET existencias =? WHERE codigo=?";
                 PreparedStatement ps = cActiva.prepareStatement(sql);
-                //ResultSet rs = ps.executeQuery();
                 ps.setInt(1, cant);
                 ps.setString(2, dato.getProducto().getCodigo());
                 int rta = ps.executeUpdate();
-                
+
                 return rta;
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(OperFactura.class.getName()).log(Level.SEVERE, null, ex);
             } finally {

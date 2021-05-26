@@ -23,6 +23,7 @@
                     </div>
                 </section>
                 <p:panel>
+                    <p:panel>
                     <div>
                         <img src="imagenes/logotipo.jpg" alt="" class="imagen-logoEm"/> 
                         <div align="left" class="box">FACTURA DE VENTA</div>
@@ -34,6 +35,7 @@
                         <div class="box">NIT: 17,610,465-1</div>
                         <div class="box">TELÉFONO: 460147345</div>
                     </div>
+                    </p:panel>
                 </p:panel>
 
                 <p:panel>
@@ -43,7 +45,7 @@
                             <p:messages id="messages" showDetail="true" closable="true">
                                 <p:autoUpdate/>
                             </p:messages>
-
+                            <p:panel>
                             <span class="ui-float-label">
                                 <p:inputMask id="codigo" value="#{manejadorBean_Inv.codigoP}"/>
                                 <p:outputLabel for="@previous" value="Codigo del producto"/>
@@ -51,20 +53,21 @@
                             <span class="ui-float-label">
                                 <p:inputMask id="cantidad" value="#{manejadorBean_Inv.cantidad}"/>
                                 <p:outputLabel for="@previous" value="Cantidad"/>
-                            </span><br/><br/>
+                                <p:commandButton value="Ver inventario" style="margin: 30px" action="#{inicioBean.mostrarBaseDatos()}"/>
+                            </span><br/>
 
                             <h5 class="p-mt-0">Elija un método de pago</h5>
                             <p:selectOneRadio value="#{manejadorBean_Inv.descuento}" unselectable="true">
                                 <f:selectItem itemLabel="Tarjeta" itemValue="tarjeta"/>
                                 <f:selectItem itemLabel="Efectivo" itemValue="efectivo"/>
                             </p:selectOneRadio>
-
+                            <br/>
 
                             <p:commandButton value="Agregar " action="#{manejadorBean_Inv.agregarDatos()}" update="tablita"
                                              ajax="false" icon="pi pi-check" validateClient="true"/>
                             <br/><br/>
-
-
+                            </p:panel>
+                            <br/><br/>
                             <p:dataTable id="tablita" var="inventario" value="#{manejadorBean_Inv.agregarProd}" 
                                          rows="10" styleClass="p-mt-2" scrollable="true"
                                          scrollHeight="300">
@@ -113,7 +116,7 @@
                     </div>
                 </p:panel>
                 <br/>
-                <p:commandButton id="boton" value="Volver " action="index"/>
+                <p:commandButton id="boton" value="Volver" action="index"/>
                 <br/>
 
                 <br/><br/>

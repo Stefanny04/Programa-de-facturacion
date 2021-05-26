@@ -120,7 +120,7 @@ public class ManejadorBean_Inv implements Serializable {
         Inventario inv = new Inventario();
         inv.setProducto(prod);
         Inventario inve = oper.llevarInventario(this.codigoP);
-        
+
         //Operación existencias 
         operacionesFactura operF = new operacionesFactura();
         int aux = -1;
@@ -129,79 +129,48 @@ public class ManejadorBean_Inv implements Serializable {
                 aux = e;
             }
         }
-        if(operF.cantidad(cantidad, lista.get(aux).getExistencias()) == 0){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "mal, ponga bien la cantidad"));
-            
-        }else{
+        if (operF.cantidad(cantidad, lista.get(aux).getExistencias()) == 0) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Verifique las existencias en la base de datos"));
+
+        } else {
             int cantidadF = operF.cantidad(cantidad, lista.get(aux).getExistencias());
             oper.actualizarExt(cantidadF, lista.get(aux));
             ListaEstatica.add(inve);
             this.agregarProd = ListaEstatica;
             inventario = new Inventario();
+            
+            //operacion valorTproducto
             for (int e = 0; e < agregarProd.size(); e++) {
-            if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
-                aux = e;
+                if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
+                    aux = e;
+                }
+            }
+            valorTproducto = operF.totalProd(cantidad, agregarProd.get(aux).getProducto().getValorUnit());
+            agregarProd.get(aux).setValorTproducto(this.valorTproducto);
+            agregarProd.get(aux).setCantidad(this.cantidad);
+
+            //operacion valorTfactura
+            for (int e = 0; e < agregarProd.size(); e++) {
+                if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
+                    aux = e;
+                }
+                valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
+            }
+            agregarProd.get(aux).setValorTFact(this.valorTFactura);
+
+            //aplicar los descuentos
+            if (descuento.equals("tarjeta")) {
+                desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
+                agregarProd.get(aux).setDescT(this.desc);
+            } else {
+                desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
+                agregarProd.get(aux).setDescE(this.desc);
+            }
+            if (descuento.isEmpty()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Recuerde seleccionar un método de pago para realizar el descuento"));
             }
         }
-        valorTproducto = operF.totalProd(cantidad, agregarProd.get(aux).getProducto().getValorUnit());
-        agregarProd.get(aux).setValorTproducto(this.valorTproducto);
-        agregarProd.get(aux).setCantidad(this.cantidad);
 
-        //operacion valorTfactura
-        for (int e = 0; e < agregarProd.size(); e++) {
-            if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
-                aux = e;
-            }
-            valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
-        }
-        agregarProd.get(aux).setValorTFact(this.valorTFactura);
-
-        
-        //aplicar los descuentos
-        if (descuento.equals("tarjeta")) {
-            desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
-            agregarProd.get(aux).setDescT(this.desc);
-        } else {
-            desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
-            agregarProd.get(aux).setDescE(this.desc);
-        }
-        if (descuento.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Seleccione un método de pago"));
-        }
-        }
-        
-
-        /*//operacion valorTproducto
-        for (int e = 0; e < agregarProd.size(); e++) {
-            if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
-                aux = e;
-            }
-        }
-        valorTproducto = operF.totalProd(cantidad, agregarProd.get(aux).getProducto().getValorUnit());
-        agregarProd.get(aux).setValorTproducto(this.valorTproducto);
-        agregarProd.get(aux).setCantidad(this.cantidad);
-
-        //operacion valorTfactura
-        for (int e = 0; e < agregarProd.size(); e++) {
-            if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
-                aux = e;
-            }
-            valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
-        }
-        agregarProd.get(aux).setValorTFact(this.valorTFactura);
-
-        
-        //aplicar los descuentos
-        if (descuento.equals("tarjeta")) {
-            desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
-            agregarProd.get(aux).setDescT(this.desc);
-        } else {
-            desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
-            agregarProd.get(aux).setDescE(this.desc);
-        }
-        if (descuento.isEmpty()) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Seleccione un método de pago"));
-        }*/
     }
 
 }

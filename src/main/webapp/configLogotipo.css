@@ -48,7 +48,6 @@ head
     display: flex;
     justify-content: space-between;
     bottom: 0;
-    background-color: buttonhighlight;
     align-content: center;
 }
 
