@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import logica.OperFactura;
 
 @ManagedBean
@@ -19,6 +21,8 @@ public class ManejadorBean_Inv implements Serializable {
     private int cantidad;
     private long valorTproducto;
     private long valorTFactura;
+    private String descuento;
+    private long desc;
     private List<Inventario> lista;
     private static ArrayList<Inventario> ListaEstatica = new ArrayList<>();
     private ArrayList<Inventario> agregarProd = new ArrayList<>();
@@ -63,6 +67,22 @@ public class ManejadorBean_Inv implements Serializable {
         this.valorTFactura = valorTFactura;
     }
 
+    public String getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(String descuento) {
+        this.descuento = descuento;
+    }
+
+    public long getDesc() {
+        return desc;
+    }
+
+    public void setDesc(long desc) {
+        this.desc = desc;
+    }
+    
     public List<Inventario> getLista() {
         return lista;
     }
@@ -100,7 +120,9 @@ public class ManejadorBean_Inv implements Serializable {
         Inventario inv = new Inventario();
         inv.setProducto(prod);
         Inventario inve = oper.llevarInventario(this.codigoP);
-
+        
+        
+        
         ListaEstatica.add(inve);
         this.agregarProd = ListaEstatica;
         inventario = new Inventario();
@@ -115,17 +137,18 @@ public class ManejadorBean_Inv implements Serializable {
         }
         int cantidadF = operF.cantidad(cantidad, lista.get(aux).getExistencias());
         oper.actualizarExt(cantidadF, lista.get(aux));
+        
 
         //operacion valorTproducto
         for (int e = 0; e < agregarProd.size(); e++) {
             if (agregarProd.get(e).getProducto().getCodigo().equals(codigoP)) {
-                aux = e;                
+                aux = e;
             }
         }
         valorTproducto = operF.totalProd(cantidad, agregarProd.get(aux).getProducto().getValorUnit());
         agregarProd.get(aux).setValorTproducto(this.valorTproducto);
         agregarProd.get(aux).setCantidad(this.cantidad);
-        
+
         //operacion valorTfactura
         for (int e = 0; e < agregarProd.size(); e++) {
             if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
@@ -133,19 +156,17 @@ public class ManejadorBean_Inv implements Serializable {
             }
             valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
         }
-        
-        agregarProd.get(aux).setValorTFact(this.valorTFactura);
-    }
 
-    /*public void totalFact() {
-        operacionesFactura operF = new operacionesFactura();
-        int aux = -1;
-        for (int e = 0; e < agregarProd.size(); e++) {
-            if (agregarProd.get(e).getValorTproducto() == valorTproducto) {
-                aux = e;
-            }
-            valorTFactura = operF.totalFactura(agregarProd.get(aux).getValorTproducto());
-        }
         agregarProd.get(aux).setValorTFact(this.valorTFactura);
-    }*/
+        
+        //aplicar los descuentos
+        if(descuento.equals("tarjeta")){
+            desc = (long) operF.valorTarjeta(agregarProd.get(aux).getValorTFact());
+            agregarProd.get(aux).setDescT(this.desc);
+        }else{
+            desc = (long) operF.valorEfect(agregarProd.get(aux).getValorTFact());
+            agregarProd.get(aux).setDescE(this.desc);
+        }
+        
+    }
 }
